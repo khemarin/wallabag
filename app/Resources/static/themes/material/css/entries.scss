@@ -2,6 +2,38 @@
  * Entries
  * ========================================================================== */
 
+.mass-buttons {
+  margin: 5px;
+
+  #selectAll {
+    position: relative;
+    opacity: initial;
+    left: 0;
+  }
+
+  span {
+    padding: 3px;
+  }
+
+  button {
+    i {
+      font-size: 12px;
+    }
+  }
+}
+
+.card-stacked {
+  input[type=checkbox] {
+    position: relative;
+    opacity: initial;
+    left: 0;
+  }
+
+  .entry-checkbox {
+    margin-right: 10px;
+  }
+}
+
 .collection {
   margin: 15px 15px 0;
 

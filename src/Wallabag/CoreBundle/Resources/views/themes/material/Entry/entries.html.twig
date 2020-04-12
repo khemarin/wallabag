@@ -7,6 +7,18 @@
     {% endif %}
 {% endblock %}
 
+{% block scripts %}
+    {{ parent() }}
+    <script>
+        function toggle(source) {
+            checkboxes = document.getElementsByName('entry-checkbox[]');
+            for(var i=0,n=checkboxes.length;i<n;i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+    </script>
+{% endblock %}
+
 {% block title %}
     {% set filter = '' %}
     {% if tag is defined %}
@@ -24,6 +36,7 @@
     {% if currentRoute == 'homepage' %}
         {% set currentRoute = 'unread' %}
     {% endif %}
+    <form name="form_mass_action" action="{{ path('mass_action') }}" method="post">
     <div class="results">
         <div class="nb-results">
             {{ 'entry.list.number_on_the_page'|transchoice(entries.count) }}
@@ -38,6 +51,21 @@
     </div>
 
     <ul class="{% if listMode == 1 %}collection{% else %}row data{% endif %}">
+
+        <li class="mass-buttons">
+            {% if entries.count > 0 and listMode == 1 %}
+                <span>
+                    <input id="selectAll" type="checkbox" onClick="toggle(this)" />&nbsp;
+                </span>
+
+                <span>
+                    <button class="btn" type="submit" name="toggle-read"><i class="material-icons">done</i></button>
+                    <button class="btn" type="submit" name="toggle-star"><i class="material-icons">star</i></button>
+                    <button class="btn" type="submit" name="delete"><i class="material-icons">delete</i></button>
+                </span>
+            {% endif %}
+        </li>
+
         {% for entry in entries %}
             <li id="entry-{{ entry.id|e }}" class="entry col {% if listMode == 0 %}l3 m6{% else %}collection-item{% endif %} s12">
                 {% if listMode == 1 %}
@@ -50,6 +78,7 @@
             </li>
         {% endfor %}
     </ul>
+</form>
 
     {% if entries.getNbPages > 1 %}
         <div class="results">
