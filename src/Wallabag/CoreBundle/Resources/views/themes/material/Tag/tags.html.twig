@@ -21,7 +21,7 @@
             {% for tag in tags %}
                 <li title="{{tag.label}} ({{ tag.nbEntries }})" id="tag-{{ tag.id }}" class="chip">
                     <a href="{{ path('tag_entries', {'slug': tag.slug}) }}" class="card-tag-link" data-handle="tag-link">
-                        {{ tag.label }}&nbsp;({{ tag.nbEntries }})
+                        {{ tag.label| truncate(15, true, '…') }}&nbsp;({{ tag.nbEntries }})
                     </a>
                     {% if renameForms is defined and renameForms[tag.id] is defined %}
                     <form class="card-tag-form hidden" data-handle="tag-rename-form" action="{{ path('tag_rename', {'slug': tag.slug})}}" method="POST">
