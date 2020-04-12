@@ -33,22 +33,22 @@ class EntryController extends Controller
         $action = 'toggle-read';
         if (isset($values['toggle-star'])) {
             $action = 'toggle-star';
-        } else if (isset($values['delete'])) {
+        } elseif (isset($values['delete'])) {
             $action = 'delete';
         }
 
         if (isset($values['entry-checkbox'])) {
             foreach ($values['entry-checkbox'] as $id) {
                 /** @var Entry * */
-                $entry = $this->get('wallabag_core.entry_repository')->findById((int)$id)[0];
+                $entry = $this->get('wallabag_core.entry_repository')->findById((int) $id)[0];
 
                 $this->checkUserAction($entry);
 
                 if ('toggle-read' === $action) {
                     $entry->toggleArchive();
-                } else if ('toggle-star' === $action) {
+                } elseif ('toggle-star' === $action) {
                     $entry->toggleStar();
-                } else if ('delete' === $action) {
+                } elseif ('delete' === $action) {
                     $this->get('event_dispatcher')->dispatch(EntryDeletedEvent::NAME, new EntryDeletedEvent($entry));
                     $em->remove($entry);
                 }

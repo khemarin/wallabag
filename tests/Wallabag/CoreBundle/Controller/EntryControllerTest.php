@@ -1579,7 +1579,6 @@ class EntryControllerTest extends WallabagCoreTestCase
         $entries[] = $entry2->getId();
 
         // Mass actions : archive
-
         $client->request('POST', '/mass', [
             'toggle-archive' => '',
             'entry-checkbox' => $entries,
@@ -1602,14 +1601,12 @@ class EntryControllerTest extends WallabagCoreTestCase
         $this->assertSame(1, $res->isArchived());
 
         // Mass actions : star
-
         $client->request('POST', '/mass', [
             'toggle-star' => '',
             'entry-checkbox' => $entries,
         ]);
 
         $this->assertSame(302, $client->getResponse()->getStatusCode());
-
 
         $res = $client->getContainer()
             ->get('doctrine.orm.entity_manager')
@@ -1626,7 +1623,6 @@ class EntryControllerTest extends WallabagCoreTestCase
         $this->assertSame(1, $res->isStarred());
 
         // Mass actions : delete
-
         $client->request('POST', '/mass', [
             'delete' => '',
             'entry-checkbox' => $entries,
